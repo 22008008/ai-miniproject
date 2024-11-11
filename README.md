@@ -13,16 +13,90 @@ This project aims to leverage machine learning techniques, that implements Diver
 -Data Splitting
 -Predictive Modeling with Diverse Algorithms
 -Model Evaluation and Selection -
-Interpretability and Feature Importance
+-Interpretability and Feature Importance
 -Deploy Model in Real-World Application
 -Generate Prediction and Improve Patient Outcomes
 -End Program
 ```
-## SYSTEM ARCHITECTURE
+## PROGRAM
+```
+*Importing Libraries
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+from sklearn.impute import SimpleImputer
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+from sklearn.metrics import accuracy_score, classification_report
 
-![Screenshot 2024-10-17 122930](https://github.com/user-attachments/assets/57dc58a1-8548-45cd-9bbf-78a2306af2e5)
+*Importing Machine Learning Algorithms
+from sklearn.linear_model import LogisticRegression
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.svm import SVC
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.ensemble import GradientBoostingClassifier
+from sklearn.ensemble import AdaBoostClassifier
+from sklearn.naive_bayes import GaussianNB
+from sklearn.neural_network import MLPClassifier
+import xgboost as xgb
 
+*Suppressing warnings
+Important Code segments
+import warnings
+warnings.filterwarnings(action="ignore")
+# Load Dataset
+df = pd.read_csv("/content/heart_disease_data (1) (1).csv")
+df.head()
 
+*Data Overview
+df.info()
+df.isnull().sum()
+print(f"Shape of dataset: {df.shape}")
+print(df.describe())
+
+*Data Visualization: Distribution of Heart Attacks
+sns.countplot(data=df, x="target") # 'target' represents heart disease presence
+plt.title("Distribution of Heart Attack")
+plt.show()
+
+*Splitting Features and Target Variable
+X = df.drop("target", axis=1) # Features
+y = df["target"] # Target Variable
+Important Code segments
+
+*Train-Test Split
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+# Feature Scaling
+scaler = StandardScaler()
+X_train = scaler.fit_transform(X_train)
+X_test = scaler.transform(X_test)
+
+*Model Definitions
+models = {
+ "Logistic Regression": LogisticRegression(),
+ "Decision Tree": DecisionTreeClassifier(),
+ "Random Forest": RandomForestClassifier(),
+ "SVM": SVC(),
+ "KNN": KNeighborsClassifier(),
+ "Gradient Boosting": GradientBoostingClassifier(),
+ "XGBoost": xgb.XGBClassifier(),
+ "AdaBoost": AdaBoostClassifier(),
+ "Naive Bayes": GaussianNB(),
+ "MLP Neural Network": MLPClassifier()
+}
+Important Code segments
+
+*Training and Evaluating Models
+for name, model in models.items():
+ print(f"Training {name}...")
+ model.fit(X_train, y_train) # Training the model
+ y_pred = model.predict(X_test) # Making predictions
+ accuracy = accuracy_score(y_test, y_pred) # Calculating accuracy
+ print(f"{name} Accuracy: {np.round(accuracy, 2)}") # Displaying accuracy
+ print(classification_report(y_test, y_pred)) # Displaying classification report
+```
 ## OUTPUT 1
 
 ![Screenshot 2024-10-17 113247](https://github.com/user-attachments/assets/ea973986-5092-4af1-9d02-dd4a560d6eaa)
